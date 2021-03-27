@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	//__________Fazendo a tela principal da applicação ( Scene )__________
+	
+		private static Scene mainScene;
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -21,14 +25,17 @@ public class Main extends Application {
 			scrollPane.setFitToWidth(true);
 			 
 			
-			Scene mainScene = new Scene(scrollPane);
-			primaryStage.setScene(mainScene);
+			mainScene = new Scene(scrollPane);
+			primaryStage.setScene(mainScene);//palco
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 
 	public static void main(String[] args) {

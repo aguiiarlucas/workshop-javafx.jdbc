@@ -2,8 +2,6 @@ package model.entities;
 
 import java.io.Serializable;
 
-
-//_________Criando a classe Department  com equals hascode_________
 public class Department implements Serializable {
 
 	private static final long serialVersionUID = 1L;

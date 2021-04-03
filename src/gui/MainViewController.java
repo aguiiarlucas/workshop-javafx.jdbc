@@ -40,7 +40,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	public void menuItemDepartmentAction() {
 		loadView("/gui/DepartmentList.fxml",(DepartmentListController controller)->{
-			controller.setService(new DepartmentService());
+			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
 		});
 		}
@@ -55,28 +55,25 @@ public class MainViewController implements Initializable {
 	}
 	//__________Criando uma função generica pra abrir outra tela (LoadView)__________
 	
-	private  synchronized <T>  void loadView(String absolutName, Consumer<T>initializingAction ) {
+	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
 		try {
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
-			VBox newVBox = loader.load(); //carrega a view
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
 			
 			Scene mainScene = Main.getMainScene();
-			VBox mainVBox = (VBox)((ScrollPane)mainScene.getRoot()).getContent();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			
 			Node mainMenu = mainVBox.getChildren().get(0);
-			mainVBox.getChildren().clear();//limpa todos os filhos do vbox
+			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
-			//__________Comando para executar onMenuItemSellerACtion__________
-			
-			T controller  = loader.getController();
+			T controller = loader.getController();
 			initializingAction.accept(controller);
-		} catch (IOException e) {
-			Alerts.showAlerts("IO Exception", "Error loading view", e.getMessage(),AlertType.ERROR);
 		}
-	
-	}
- 
+		catch (IOException e) {
+			e.printStackTrace();
+			Alerts.showAlerts("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
+	}	
 }

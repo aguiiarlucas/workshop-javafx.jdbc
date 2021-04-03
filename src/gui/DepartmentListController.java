@@ -46,6 +46,7 @@ public class DepartmentListController implements Initializable {
 		private Button btNew; 
 		
 		//__________Carregar os departamentos dentro do tableView_________
+		@FXML
 		private ObservableList<Department>obsList;
 		
 		@FXML
@@ -54,8 +55,8 @@ public class DepartmentListController implements Initializable {
 			createDialogForm("/gui/DepartmentForm.fxml", parentStage);
 		}
 
-		public void setService(DepartmentService service) {
-			this.service = service; // injeção de dependencia
+		public void setDepartmentService(DepartmentService service) {
+			this.service = service;
 		}
 	 
 	@Override
@@ -87,22 +88,21 @@ public class DepartmentListController implements Initializable {
 		 tableViewDEpartment.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absolutName,Stage parentStage) {
+	private void createDialogForm(String absoluteName, Stage parentStage) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 			
-			//_________Função pra carregar a janela do formulario pra carregar um novo departamento
-			
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter Department daata"); // Config titulo da janela
-			dialogStage.setScene(new Scene(pane)); //A Cena é o pane
-			dialogStage.setResizable(false); //Janela pode ou não pode ser redimensionada
-			dialogStage.initOwner(parentStage); //Pai da janela (?!)
-			dialogStage.initModality(Modality.WINDOW_MODAL); //Se a janela é Model ou não (Travada)
-			dialogStage.showAndWait(); //Mostra
+			dialogStage.setTitle("Enter Department data");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
 		} catch (IOException e) {
-			Alerts.showAlerts("IO Exception", "Error loading view", e.getMessage(),AlertType.ERROR);
+			e.printStackTrace();
+			Alerts.showAlerts("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-}
+	}

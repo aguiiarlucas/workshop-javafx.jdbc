@@ -36,12 +36,9 @@ public class DepartmentFormController implements Initializable {
 		System.out.println("Fala algo pra cancelar");
 	}
 	
-	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-	
-	
-		
+		initializeNodes();
 	}
 	//__________Métodos de restrições__________
 	private void initializeNodes() {

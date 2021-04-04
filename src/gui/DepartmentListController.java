@@ -52,7 +52,8 @@ public class DepartmentListController implements Initializable {
 		@FXML
 		public void  onButtonAction(ActionEvent event) { //tratamento de evento para clicar no botão
 			Stage parentStage = Utils.currentStage(event);
-			createDialogForm("/gui/DepartmentForm.fxml", parentStage);
+			Department obj = new Department();
+			createDialogForm(obj,"/gui/DepartmentForm.fxml", parentStage);
 		}
 
 		public void setDepartmentService(DepartmentService service) {
@@ -79,6 +80,7 @@ public class DepartmentListController implements Initializable {
 	
 	//_________Método responsável por acessar , carregar e  jogar os dep no ObsList;
 	public void updateTableView() {
+		
 		//if de segurança ; esqueceu .
 		 if(service == null) {
 			 throw new  IllegalStateException(" Service was null ");
@@ -88,10 +90,15 @@ public class DepartmentListController implements Initializable {
 		 tableViewDEpartment.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			//__________Pegar referencia para o controlador_________
+			DepartmentFormController controller = loader.getController();
+			controller.setDepartment(obj);
+			controller.updateFormData(); //carrega os dados os obj no formulario
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department data");

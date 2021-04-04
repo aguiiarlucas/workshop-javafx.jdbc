@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -27,7 +28,9 @@ import model.entities.Department;
 import model.services.DepartmentService;
 
 //_________Criando a classe DepartmentListController_________
-public class DepartmentListController implements Initializable {
+
+public class DepartmentListController implements Initializable, DataChangeListener {
+	
 	//__________Referencias para o DepartmentList_________
 	 
 		private DepartmentService  service;
@@ -81,8 +84,8 @@ public class DepartmentListController implements Initializable {
 	//_________Método responsável por acessar , carregar e  jogar os dep no ObsList;
 	public void updateTableView() {
 		
-		//if de segurança ; esqueceu .
-		 if(service == null) {
+			
+		 if(service == null) { //if de segurança ; esqueceu .
 			 throw new  IllegalStateException(" Service was null ");
 	}
 		 List<Department>list = service.findAll();
@@ -99,9 +102,11 @@ public class DepartmentListController implements Initializable {
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(obj);
 			controller.setDepartmentService(new DepartmentService());
+			controller.subscribeDataChangeListener(this); //Padrao Observe - estou me inscrevendo para receber o evento OnDataChanged();
 			controller.updateFormData(); //carrega os dados os obj no formulario
 			
 			Stage dialogStage = new Stage();
+			
 			dialogStage.setTitle("Enter Department data");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
@@ -113,4 +118,9 @@ public class DepartmentListController implements Initializable {
 			Alerts.showAlerts("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
+
+	@Override
+	public void onDataChanged() {
+	 updateTableView();
+		}
 	}

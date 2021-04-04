@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DbException;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
@@ -22,6 +25,9 @@ public class DepartmentFormController implements Initializable {
 	private Department entity;
 
 	private DepartmentService service;
+
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+
 	@FXML
 	private TextField txtId;
 
@@ -46,10 +52,16 @@ public class DepartmentFormController implements Initializable {
 		this.service = service;
 	}
 
+	// __________Método para adicionar o dataChangeListener na lista
+
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		dataChangeListeners.add(listener);
+	}
+
 	@FXML
 	public void onBtSaveAction(ActionEvent event) {
 
-		if (entity == null) { 
+		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
 
@@ -58,17 +70,25 @@ public class DepartmentFormController implements Initializable {
 		}
 		try {
 			entity = getFormData();
-			service.saveOrUpdate(entity); // pode ter uma exception , por isso o try/catch
-			Utils.currentStage(event).close(); // fecha a janela
-
+			service.saveOrUpdate(entity);
+			notifyDataChangeListeners();
+			Utils.currentStage(event).close();
 		} catch (DbException e) {
 			Alerts.showAlerts("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
 
 	}
 
+	private void notifyDataChangeListeners() {
+
+		for (DataChangeListener listener : dataChangeListeners) {
+			listener.onDataChanged(); 
+		}
+
+	}
+
 	// __________Responsável por pegar os dados das caixas do formulario e instaciar
-	// um departamento
+	 // um departamento
 	private Department getFormData() {
 
 		Department obj = new Department();
@@ -79,7 +99,7 @@ public class DepartmentFormController implements Initializable {
 
 	@FXML
 	public void onBtCancelAction(ActionEvent event) {
-		 Utils.currentStage(event).close();
+		Utils.currentStage(event).close();
 	}
 
 	@Override

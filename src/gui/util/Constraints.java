@@ -2,7 +2,6 @@
 package gui.util;
 
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 public class Constraints {
 

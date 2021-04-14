@@ -29,6 +29,14 @@ public class Utils {
 			return null;// ... ele retorna null(vazio)
 		}
 	}
+	public static Double tryParseToDouble(String str) {
+		try {
+			return Double.parseDouble(str); // converter String para Int , se houver um erro...
+
+		} catch (NumberFormatException e) {
+			return null;// ... ele retorna null(vazio)
+		}
+	}
 
 	public static <T> void formatTableColumnDate(TableColumn<T, Date> tabColumn, String format) {
 		tabColumn.setCellFactory(column -> {

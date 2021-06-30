@@ -58,7 +58,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private TableColumn<Seller, Date> tableColumnBirthDate;
 	
 	@FXML
-	private TableColumn<Seller, Double> tableBaseSalary;
+	private TableColumn<Seller, Double> tableColumnBaseSalary;
 	
 	
 
@@ -76,7 +76,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private ObservableList<Seller> obsList;
 
 	@FXML
-	public void onButtonAction(ActionEvent event) { // tratamento de evento para clicar no botão
+	public void onButtonAction(ActionEvent event) { // tratamento de evento para clicar no botï¿½o
 		Stage parentStage = Utils.currentStage(event);
 		Seller obj = new Seller();
 		createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
@@ -91,7 +91,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 		initializeNodes();
 
 	}
-	// _________Macete padrão para iniciar o comportamento das columnas_________
+	// _________Macete padrï¿½o para iniciar o comportamento das columnas_________
 
 	private void initializeNodes() {
 
@@ -100,8 +100,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
 		Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
-		tableBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
-		Utils.formatTableColumnDouble(tableBaseSalary,2);
+		tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
+		Utils.formatTableColumnDouble(tableColumnBaseSalary,2);
 
 
 		// __________Macete para o tableViewSeller acompanhar a altura da
@@ -111,10 +111,10 @@ public class SellerListController implements Initializable, DataChangeListener {
 		tableViewSeller.prefHeightProperty().bind(stage.heightProperty());
 	}
 
-	// _________Método responsável por acessar , carregar e jogar os dep no ObsList;
+	// _________Mï¿½todo responsï¿½vel por acessar , carregar e jogar os dep no ObsList;
 	public void updateTableView() {
 
-		if (service == null) { // if de segurança ; esqueceu .
+		if (service == null) { // if de seguranï¿½a ; esqueceu .
 			throw new IllegalStateException(" Service was null ");
 		}
 		List<Seller> list = service.findAll();
@@ -197,7 +197,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	private void removeEntity(Seller obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure?"); // Alerta dentro do
-																								// botão
+																								// botï¿½o
 
 		if (result.get() == ButtonType.OK) {
 			if (service == null) {

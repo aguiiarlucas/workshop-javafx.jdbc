@@ -1,5 +1,8 @@
 package gui;
 
+import java.awt.Button;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +15,9 @@ import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import model.entities.Department;
 import model.exceptions.ValidationException;
 import model.services.DepartmentService;

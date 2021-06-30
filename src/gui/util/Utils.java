@@ -60,7 +60,6 @@ public class Utils {
 	public static <T> void formatTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Double> cell = new TableCell<T, Double>() {
-
 				@Override
 				protected void updateItem(Double item, boolean empty) {
 					super.updateItem(item, empty);

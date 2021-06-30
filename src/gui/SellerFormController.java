@@ -1,17 +1,5 @@
 package gui;
 
-import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-
 import db.DbException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -23,19 +11,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import model.entities.Department;
 import model.entities.Seller;
 import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 import model.services.SellerService;
+
+import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 public class SellerFormController implements Initializable {
 
@@ -147,21 +135,21 @@ public class SellerFormController implements Initializable {
 		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
 			exception.addError("email", "Field can't be empty");
 		}
-		obj.setEmail(txtEmail.getText());
+		obj.setName(txtEmail.getText());
 
-		if (dpBirthDate.getValue() == null) {
+		if(dpBirthDate.getValue()==null) {
 			exception.addError("birthDate", "Field can't be empty");
 		}
 		else {
-			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault())); // valor do DatePicker
 			obj.setBirthDate(Date.from(instant));
 		}
-
+		
 		if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) {
 			exception.addError("baseSalary", "Field can't be empty");
 		}
 		obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
-
+		
 		obj.setDepartment(comboBoxDepartment.getValue());
 		
 		if (exception.getErrors().size() > 0) {
